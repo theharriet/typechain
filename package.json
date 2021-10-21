@@ -1,0 +1,23 @@
+{
+  "name": "typescript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://theharriet@github.com/theharriet/typechain.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "prestart": "tsc"
+  },
+  "bugs": {
+    "url": "https://github.com/theharriet/typechain/issues"
+  },
+  "homepage": "https://github.com/theharriet/typechain#readme"
+}
