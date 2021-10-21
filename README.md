@@ -1,4 +1,6 @@
-# typechain
+# Typechain
+
+Learning Typescript by making Blockchain with it
 
 typesript - 자바스크립트의 superset
         프로그래밍 언어, looks like Javascript, 컴파일 하면 자바스크립트로 컴파일 됨
