@@ -12,9 +12,7 @@
   "author": "",
   "license": "MIT",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "prestart": "tsc"
+    "start": "tsc-watch --onSuccess \" node dist/index.js\" "
   },
   "bugs": {
     "url": "https://github.com/theharriet/typechain/issues"
