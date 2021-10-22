@@ -1,36 +1,30 @@
-interface Human {
-    name: string,
-    age: number,
-    gender: string
+class Human {
+    public name: string;
+    public age: number;
+    public gender: string;
+    constructor(name: string, age: number, gender: string){
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+    }; 
+    //constructor는 메서드인데 클래스가 시작될 때(클래스로부터 객체를 만들때)마다 호출됨
 }
+//js - public이든 private이든 신경안씀
 
-const person = {
-    name: "harriet",
-    age: 24,
-    gender: "female"
-}
+const lynn = new Human("Lynn", 18, "female");
 
 const sayHi = (person: Human): string => {
     return `Hello ${person.name}, you are ${person.age}, you are a ${person.gender}`;
 }
-//그럼 이제 person이 human interface랑 같은 구조인지 체크할거야 타입스크립트가 
 
-// const sayHi = (name: string, age: number, gender: string): string => {
-//     return `Hello ${name}, you are ${age}, you are a ${gender}`;
-// }
+console.log(sayHi(lynn));
 
-//const sayHi = (name: string, age: number, gender: string): void => {
-//    console.log(`Hello ${name}, you are ${age}, you are a ${gender}`);
-//}
+//interface는 자바스크립트로 컴파일 되지 않음
+//인터페이스를 자바스크립에 넣고 싶다면 interface대신 class를 넣어줌
+// ts에서의 class는 코드를 컨트롤할수 있도록 해줌 (장점)
 
-//sayHi("harriet", 24, "female");
-//console.log(sayHi(person)); 이렇게 하면 안돼 sayHi()는 3개의 argument를 예상하고 있기에
-// object로 전달하면 가능 --> interface해보자
-
-//이런식으로 interface를 사용해서 object를 사용하면
-// 블록체인의 경우 하나의 블록을 interface로 할 수 있음
-
-
+//js에서는 class의 property들을 묘사할 필요가 없음 그냥 클래스만들고 속성들은 신경쓰지 않아
+//ts에서는 클래스가 어떤 속성들을 가지고 있는지 선언해줘야함
 
 
 export {};
