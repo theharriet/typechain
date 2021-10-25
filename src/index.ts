@@ -1,12 +1,6 @@
 import * as CryptoJS from "crypto-js";
 
 class Block {
-    public index: number;
-    public hash: string;
-    public previousHash: string;
-    public data: string;
-    public timestamp: number;
-
     //block을 생성하지 않아도 사용가능한 메서드
     static calculateBlockHash = (
         index: number,  
@@ -14,6 +8,20 @@ class Block {
         timestamp: number,
         data: string
         ): string => CryptoJS.SHA256(index + previousHash + timestamp + data).toString();
+
+    static validateStructure = (aBlock: Block) => 
+    typeof aBlock.index === "number" && 
+    typeof aBlock.hash === "string" && 
+    typeof aBlock.previousHash === "string" &&
+    typeof aBlock.timestamp === "number" &&
+    typeof aBlock.data === "string";
+    //structure가 유효하면 return true or false.
+
+    public index: number;
+    public hash: string;
+    public previousHash: string;
+    public data: string;
+    public timestamp: number;
 
     constructor(index: number, hash: string, previousHash: string, data: string, timestamp: number){
         this.index = index;
@@ -61,14 +69,36 @@ const createNewBlock = (data: string) : Block =>{
       return newBlock;
 }
 
-console.log(createNewBlock("Hello"), createNewBlock("Bye bye"));
+//console.log(createNewBlock("Hello"), createNewBlock("Bye bye"));
 
-//블록체인 - 블록의 연결, array of block
-//그럼 이제 ts는 block만 블록체인에 추가할거임
-//blockchain.push("stuff"); 이렇게 멍청하게 넣으면 추가안됨 이건 블록아니니까
+const getHashforBlock = (aBlock: Block) : string => 
+Block.calculateBlockHash(aBlock.index, aBlock.previousHash, aBlock.timestamp, aBlock.data);
 
-//새로운 블록을 만들기 위해서는 먼저 hash를 계산해야함
-//Hash는 모든 속성을 수학적으로 길고 이상한 하나의 문자열로 결합한것
-// yarn add crypto-js
+//이 함수는 제공되고 있는 블럭이 유효한지 아닌지 체크
+//candidate 블럭과 previous블럭을 불러와 비교
+const isBlockValid(candidateBlock: Block, previousBlock: Block): boolean => {
+    //1. 블럭의 구조가 유효한지 체크
+    if(!Block.validateStructure(candidateBlock)){
+        return false;
+    }else if(previousBlock.index +1 !== candidateBlock.index){
+        return false;
+    }else if(previousBlock.hash !== candidateBlock.hash){
+        return false;
+    }else if(getHashforBlock(candidateBlock) !== candidateBlock.hash){
+        return false;
+    }else {
+        return true;
+    }
+    //따로 해쉬를 계산해서, 들어온 블럭의 해쉬가 실제로 있는지 체크 + 계산한 해쉬와 같은 해쉬인지.
+};
+
+//블럭 체인에 블럭 추가
+const addBlock = (candidateBlock: Block): void => {
+    if(isBlockValid(candidateBlock, getLatestBlock())){
+        blockchain.push(candidateBlock);
+    }
+}
 
 export {};
+
+//블록체인의 기반은 블럭들이 자신의 전 블럭들의 링크를 가지고 있음
