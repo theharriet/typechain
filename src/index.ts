@@ -66,6 +66,7 @@ const createNewBlock = (data: string) : Block =>{
         data,
         newTimeStamp
       );
+      addBlock(newBlock); //블럭을 새로 만들때마다 블럭체인에 추가
       return newBlock;
 }
 
@@ -76,13 +77,13 @@ Block.calculateBlockHash(aBlock.index, aBlock.previousHash, aBlock.timestamp, aB
 
 //이 함수는 제공되고 있는 블럭이 유효한지 아닌지 체크
 //candidate 블럭과 previous블럭을 불러와 비교
-const isBlockValid(candidateBlock: Block, previousBlock: Block): boolean => {
+const isBlockValid = (candidateBlock: Block, previousBlock: Block): boolean => {
     //1. 블럭의 구조가 유효한지 체크
     if(!Block.validateStructure(candidateBlock)){
         return false;
     }else if(previousBlock.index +1 !== candidateBlock.index){
         return false;
-    }else if(previousBlock.hash !== candidateBlock.hash){
+    }else if(previousBlock.hash !== candidateBlock.previousHash){
         return false;
     }else if(getHashforBlock(candidateBlock) !== candidateBlock.hash){
         return false;
@@ -97,7 +98,13 @@ const addBlock = (candidateBlock: Block): void => {
     if(isBlockValid(candidateBlock, getLatestBlock())){
         blockchain.push(candidateBlock);
     }
-}
+};
+
+createNewBlock("second block");
+createNewBlock("third block");
+createNewBlock("fourth block");
+
+console.log(blockchain);
 
 export {};
 
